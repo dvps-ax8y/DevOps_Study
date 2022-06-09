@@ -1,0 +1,34 @@
+departments:
+  first:
+    Olga:
+      count:3
+      job:accountant
+    Dmitriy:
+      count:4
+    Ivan:
+      count:2
+  
+  second:
+    Roman:
+      count:4
+      job:jurist
+    Maxim:
+      count:2
+      job:driver
+      
+  third:
+    Olga:
+      count:1
+      job:jurist
+    Ivan:
+      count:1
+      job:builder
+    Nikolai:
+      count:1
+      job:builder
+      
+  fouthfifth:
+  
+  sixth:
+  
+  
