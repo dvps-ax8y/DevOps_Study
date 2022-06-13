@@ -1,0 +1,56 @@
+---
+- name: Prepare build env and build webapp
+  hosts: build-serv
+  become: yes
+
+  tasks:
+  - name: Build-env Java installation
+    apt:
+     name: default-jdk
+     state: present
+
+  - name: Build-env Maven installation
+    apt:
+     name: maven
+     state: present
+
+  - name: Build-env Git installation
+    apt:
+     name: git
+     state: present
+
+  - name: Build-env Webapp pack cloning from Repo
+    git:
+     repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+     dest: /tmp/webapp/
+
+  - name: Build-env Webapp building
+    shell:
+     cmd: mvn package
+     chdir: /tmp/webapp/
+
+  - name: Build-env Copy webapp artifact to master
+    fetch:
+     src: /tmp/webapp/target/hello-1.0.war
+     dest: /tmp/webapp/hello-1.0.war
+     flat: yes
+
+- name: Prepare prod env and deploy webapp
+  hosts: prod-serv
+  become: yes
+
+  tasks:
+  - name: Prod-env Java installation
+    apt:
+     name: default-jdk
+     state: present
+
+  - name: Prod-env Tomcat installation
+    apt:
+     name: tomcat9
+     state: present
+
+  - name: Prod-env Deploy Web App
+    copy:
+     src: /tmp/webapp/hello-1.0.war
+     dest: /var/lib/tomcat9/webapps
